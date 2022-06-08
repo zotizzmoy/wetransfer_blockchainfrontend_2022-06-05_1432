@@ -1,9 +1,44 @@
-import { React,  } from "react";
+import { React, useState,  } from "react";
 
 import Input from "../components/Input";
 import PasswordInput from "../components/PasswordInput";
 import { Link} from "react-router-dom";
+import {signin, authenticate,isAuthenticated} from "../auth/index"
+const Signin = () => {
 
+  const [values,setValues] = useState({
+    email: "",
+    password:"",
+    error:"",
+    loading: false,
+    didRedirect: false
+  });
+
+   const {email, password, error, loading, didRedirect} = values;
+   const {user} = isAuthenticated(); 
+
+   const handleChange = email => event => {
+    setValues({ ...values, error: false, [email]: event.target.value });
+};
+const onSubmit = event => {
+  event.preventDefault();
+  setValues({...values, error: false, loading: true})
+  signin({email,password})
+    .then(data => {
+      if (data.error) {
+        setValues({...values, error: data.error, loading: false})
+      } else{
+        authenticate(data, () => {
+           setValues({
+             ...values,
+             didRedirect: true
+           })
+        })
+      }
+    })
+    .catch(console.log("sigin request failed!"))
+}
+}
 
 const Login = () => {
   return (
@@ -16,6 +51,8 @@ const Login = () => {
           name="email"
           type="email"
           isRequired={true}
+          onChange value={handleChange("email")}
+          
         />
         <PasswordInput classname="input-field" label="Password" name="pass" />
         <section>
@@ -23,7 +60,7 @@ const Login = () => {
             Forgot password?
           </a>
         </section>
-        <button className="btn primary-btn" type="submit">
+        <button onClick={onSubmit} className="btn primary-btn" >
           Login
         </button>
       </form>
