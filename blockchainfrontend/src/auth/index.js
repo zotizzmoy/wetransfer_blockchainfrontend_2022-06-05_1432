@@ -1,9 +1,9 @@
 import {API} from "../backend";
 // API means : http://localhost:3006/
 
-export const signup = async user => {
+export const signup =  user => {
     try {
-        const response = await fetch(`${API}/register`, {
+        const response =  fetch(`${API}register`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -11,7 +11,7 @@ export const signup = async user => {
             },
             body: JSON.stringify(user)
         });
-        return await response.json();
+        return  response.json();
     } catch (err) {
         return console.log(err);
     }
@@ -19,9 +19,9 @@ export const signup = async user => {
 
 };
 
-export const signin = async user => {
+export const signin =  user => {
     try {
-        const response = await fetch(`${API}/login`, {
+        const response = fetch(`${API}login`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -29,7 +29,7 @@ export const signin = async user => {
             },
             body: JSON.stringify(user)
         });
-        return await response.json();
+        return  response.json();
     } catch (err) {
         return console.log(err);
     }
@@ -45,13 +45,13 @@ export const authenticate = (data, next) => {
 };
 
 
-export const signout = async next => {
+export const signout =  next => {
     if (typeof window !=="undefined")
         localStorage.removeItem("jwt")
         next();
 
         try {
-        const response = await fetch(`${API}/signout`, {
+        const response =  fetch(`${API}signout`, {
             method: "GET"
         });
         return console.log("signout sucess");

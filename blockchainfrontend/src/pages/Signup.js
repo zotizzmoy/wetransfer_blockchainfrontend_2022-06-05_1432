@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import PasswordInput from "../components/PasswordInput";
 import { signup } from "../auth/index";
 
-const Signup = () => {
+const Signup= () => {
   const [values, setValues] = useState({
     email: "",
     password:"",
@@ -17,6 +17,7 @@ const Signup = () => {
 
   const handleChange = email => event => {
     setValues({ ...values, error: false, [email]: event.target.value });
+  
 };
 
 const onSubmit = event => {
@@ -39,10 +40,7 @@ const onSubmit = event => {
   })
   .catch(console.log("Error in signup"))
 };
-
-
- const signupForm = () => {
-  return (
+ return (
     <main className="signup-container">
       <h1 className="heading-1 text-center">Create an account</h1>
       <span className="text-gray">Fill in the following details</span>
@@ -67,9 +65,10 @@ const onSubmit = event => {
           name="email"
           type="email"
           isRequired={true}
+          value={email}
           onChange={handleChange("email")}
         />
-        <PasswordInput classname="input-field" label="Password" name="pass"
+        <PasswordInput classname="input-field" label="Password" value={password}
         onChange={handleChange("password")} />
         <span className="text-gray paragraph">
           By creating this account, I am agreeing to the{" "}
@@ -97,4 +96,4 @@ const onSubmit = event => {
   );
 };
 
-export default SignupFrom;
+export default Signup;

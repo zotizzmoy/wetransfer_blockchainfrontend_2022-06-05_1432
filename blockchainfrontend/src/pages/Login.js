@@ -1,10 +1,12 @@
-import { React, useState,  } from "react";
+import React from "react"; 
+import { useState,  } from "react";
 
 import Input from "../components/Input";
 import PasswordInput from "../components/PasswordInput";
 import { Link} from "react-router-dom";
 import {signin, authenticate,isAuthenticated} from "../auth/index"
-const Signin = () => {
+
+const Login = () => {
 
   const [values,setValues] = useState({
     email: "",
@@ -20,7 +22,7 @@ const Signin = () => {
    const handleChange = email => event => {
     setValues({ ...values, error: false, [email]: event.target.value });
 };
-const onSubmit = event => {
+  const onSubmit = event => {
   event.preventDefault();
   setValues({...values, error: false, loading: true})
   signin({email,password})
@@ -37,11 +39,9 @@ const onSubmit = event => {
       }
     })
     .catch(console.log("sigin request failed!"))
-}
-}
+};
 
-const Login = () => {
-  return (
+ return (
     <main className="login-container">
       <h1 className="heading-1 text-center">Login to your account</h1>
       <form className="form login-form" action="#">
@@ -72,7 +72,7 @@ const Login = () => {
         instead
       </span>
     </main>
-  );
+  )
 };
 
 export default Login;
