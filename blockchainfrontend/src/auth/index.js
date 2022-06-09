@@ -1,17 +1,13 @@
 import {API} from "../backend";
 // API means : http://localhost:3006/
+import axios from "axios";
 
-export const signup =  user => {
+export async function signup()  {
     try {
-        const response =  fetch(`${API}register`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        });
-        return  response.json();
+        const response =  await axios.post('http://localhost:3006/register');
+            
+        
+        return  response.data;
     } catch (err) {
         return console.log(err);
     }
@@ -19,17 +15,12 @@ export const signup =  user => {
 
 };
 
-export const signin =  user => {
+export  async function signin()  {
     try {
-        const response = fetch(`${API}login`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        });
-        return  response.json();
+        const response =  await axios.post(`http://localhost:3006/login`);
+            
+        
+        return  response.data;
     } catch (err) {
         return console.log(err);
     }
@@ -45,20 +36,6 @@ export const authenticate = (data, next) => {
 };
 
 
-export const signout =  next => {
-    if (typeof window !=="undefined")
-        localStorage.removeItem("jwt")
-        next();
-
-        try {
-        const response =  fetch(`${API}signout`, {
-            method: "GET"
-        });
-        return console.log("signout sucess");
-    } catch (err) {
-        return console.log(err);
-    }
-    }
 
 
 export const isAuthenticated = () => {
